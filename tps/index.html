@@ -1,30 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>TPS · Ticketless Parking System</title>
-  <meta name="description" content="TPS 智能停车交互演示：停车用户、巡查员和管理员三端联动。">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="preview-bar"><a class="brand" href="../project.html?id=gtt"><b>TPS</b><span>Ticketless Parking System</span></a><a href="../project.html?id=gtt">返回作品集</a></header>
-  <main class="stage">
-    <section class="demo-controls" aria-label="演示控制">
-      <div><h1>一次停车，三个视角。</h1><p>切换角色，体验找位、核验与运营管理。仅为演示，不会产生实际付款或罚单。</p></div>
-      <div class="role-tabs" role="tablist" aria-label="体验角色">
-        <button role="tab" id="role-user" data-role="user" aria-selected="true">停车用户 <small>Driver</small></button>
-        <button role="tab" id="role-officer" data-role="officer" aria-selected="false">巡查员 <small>Officer</small></button>
-        <button role="tab" id="role-manager" data-role="manager" aria-selected="false">管理员 <small>Manager</small></button>
-      </div>
-    </section>
-    <section class="workspace">
-      <aside class="guide" id="guide" aria-label="体验提示"></aside>
-      <div class="device" id="device"><div class="statusbar"><span>9:41</span><span aria-hidden="true">▮▮▮　▰</span></div><section id="app" aria-label="TPS application"></section></div>
-    </section>
-    <footer class="demo-footer"><span>停车场与车位源自项目备份；演示车辆、会话和账号为虚构。更改仅保存在本浏览器。</span><div><button id="advance" class="plain">推进 15 分钟</button><button id="reset" class="plain">重置演示</button></div><span id="clock-label"></span></footer>
-  </main>
-  <dialog id="dialog" aria-label="TPS dialog"><div id="dialog-body"></div></dialog>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TPS 原版界面 · 在线体验</title><style>
+*{box-sizing:border-box}body{margin:0;background:#e9ecf0;font:14px "Segoe UI","Microsoft YaHei",sans-serif;color:#273149}header{height:52px;background:#f7f8fa;border-bottom:1px solid #cfd5df;padding:0 24px;display:flex;align-items:center;justify-content:space-between}header b{font-size:21px;color:#261346}a{color:inherit;text-decoration:none}.toolbar{display:flex;justify-content:center;gap:7px;padding:13px 16px 9px;flex-wrap:wrap}button{font:inherit;cursor:pointer;color:#4a5166;background:transparent;border:1px solid #c5cbd7;border-radius:9px;padding:8px 17px}button[aria-pressed=true]{background:#261450;color:#fff;border-color:#261450}button:focus-visible,a:focus-visible{outline:3px solid #599ceb;outline-offset:3px}.note{text-align:center;font-size:12px;color:#666d80;line-height:1.8;margin:0 16px 13px}.stage{display:flex;justify-content:center;padding:0 16px 24px}.frame{padding:8px;background:#161923;border:1px solid #737985;border-radius:36px;box-shadow:0 12px 35px #25334b25;width:430px;max-width:100%;height:calc(100dvh - 175px);min-height:630px;max-height:930px;overflow:hidden}.frame iframe{width:100%;height:100%;border:0;border-radius:27px;background:#020b3c;display:block}.manager .stage{display:block;overflow:auto}.manager .frame{width:100%;min-width:1150px;height:calc(100dvh - 170px);min-height:760px;max-height:none;border-radius:16px;padding:0;background:#020b3c;box-shadow:0 8px 30px #25334b18}.manager iframe{border-radius:15px}.reset{font-size:12px;padding:8px 11px;border-color:transparent;text-decoration:underline}footer{text-align:center;font-size:12px;color:#767d8d;line-height:1.8;padding:0 16px 20px}@media(max-width:520px){header{padding:0 14px}.toolbar{padding-top:11px}button{font-size:13px;padding:8px 13px}.note{font-size:11px}.stage{padding:0 10px 18px}.frame{min-height:640px;height:calc(100dvh - 190px)}.manager .frame{min-height:740px}}
+</style></head><body><header><b>TPS</b><a href="../project.html?id=gtt">返回作品集</a></header><nav class="toolbar" aria-label="选择角色"><button data-role="user" aria-pressed="true">停车用户</button><button data-role="officer" aria-pressed="false">巡查员</button><button data-role="manager" aria-pressed="false">管理员</button><button class="reset" id="reset">重置演示数据</button></nav><p class="note">原 Flutter 界面 · 本地示例地图与模拟接口　｜　演示登录：demo@tps.example / Demo123!<br><span id="tip">用户端可用车辆 DEMO004；巡查员可查询 DEMO001（有效）、DEMO002（过期）、DEMO003（初始宽限期）。</span></p><main class="stage"><div class="frame"><iframe id="app-frame" src="user/" title="TPS 原始用户端界面" allow="clipboard-write"></iframe></div></main><footer>付款、车牌识别与执法通知均为演示，不产生实际交易。数据修改仅保存在本浏览器。</footer><script>
+const frame=document.getElementById('app-frame');document.querySelectorAll('[data-role]').forEach(button=>button.onclick=()=>{const role=button.dataset.role;document.body.classList.toggle('manager',role==='manager');document.querySelectorAll('[data-role]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));frame.title='TPS 原始'+button.textContent+'界面';frame.src=role+'/';document.getElementById('tip').textContent=role==='manager'?'管理员端保留原桌面布局；手机上可横向滚动查看。':'用户端可用车辆 DEMO004；巡查员可查询 DEMO001（有效）、DEMO002（过期）、DEMO003（初始宽限期）。'});document.getElementById('reset').onclick=()=>{if(confirm('清除本浏览器中的 TPS 演示修改并恢复初始数据？'))frame.contentWindow.postMessage('tps-reset',location.origin)};
+</script></body></html>
