@@ -53,17 +53,19 @@
     frame.src = `${role}/?v=pointer-v2`;
     frame.allow = 'clipboard-write';
     windowElement.append(frame);
-    const caption = document.createElement('div');
-    caption.className = 'live-caption';
-    const hint = document.createElement('span');
-    hint.textContent = '点击左右卡片切换视角';
-    const standalone = document.createElement('a');
-    standalone.href = frame.src;
-    standalone.target = '_blank';
-    standalone.rel = 'noopener';
-    standalone.textContent = '单独打开 ↗';
-    caption.append(hint, standalone);
-    live.append(windowElement, caption);
+    live.append(windowElement);
+    if (role === 'manager') {
+      const caption = document.createElement('div');
+      caption.className = 'live-caption';
+      const fullscreen = document.createElement('a');
+      fullscreen.className = 'fullscreen-view';
+      fullscreen.href = frame.src;
+      fullscreen.target = '_blank';
+      fullscreen.rel = 'noopener';
+      fullscreen.textContent = '全屏视图';
+      caption.append(fullscreen);
+      live.append(caption);
+    }
     selected.append(live);
     // Render the original layouts at their native sizes; only scale the outer viewport.
     const nativeWidth = role === 'manager' ? 1150 : 413;

@@ -8,3 +8,5 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 
 .intro .login-hint{font-size:11px;color:#87818f;margin:9px 0 0;line-height:1.7}
+
+.live-caption{justify-content:flex-end}.live-caption .fullscreen-view{display:inline-block;border:1px solid #c8c2d6;border-radius:20px;background:#f5f2f9;padding:7px 14px;text-decoration:none;color:var(--purple);font-size:12px}
