@@ -1,43 +1,37 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>TPS 三端体验 · 智能停车系统</title>
-  <link rel="stylesheet" href="experience.css?v=system-v1">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TPS 四端体验 · 智能停车系统</title>
+  <link rel="stylesheet" href="experience.css?v=portal-v1">
 </head>
 <body>
-  <header class="site-header"><a class="wordmark" href="../project.html?id=gtt">TPS<span>智能停车系统</span></a><a class="back-link" href="../project.html?id=gtt">返回作品集 <span aria-hidden="true">↗</span></a></header>
+  <header class="site-header"><a class="wordmark" href="../project.html?id=gtt">TPS<span>智能停车系统</span></a><a class="back-link" href="../project.html?id=gtt">返回作品集 ↗</a></header>
   <main>
-    <div class="intro"><div><p class="eyebrow">一次停车，三个视角</p><h1>从哪一端开始？</h1><p id="instruction">移动鼠标，看看不同角色。点击卡片，进入原版界面体验。</p><p class="login-hint">演示登录：demo@tps.example / Demo123!</p></div><button id="overview" class="overview" hidden>↖ 返回三端概览</button></div>
-    <section id="experiences" class="experiences" aria-label="TPS 三端交互体验">
-      <article class="role-card" data-role="user">
-        <div class="card-top"><span class="role-type">停车用户</span></div>
+    <div class="intro"><p class="eyebrow">一次停车，四个视角</p><h1>从哪一端开始？</h1><p>选择一个角色，在独立页面中体验。</p></div>
+    <section class="experiences" aria-label="TPS 四端交互体验">
+      <a class="role-card" href="view.html?role=user" aria-label="体验停车用户端">
+        <div class="card-top"><span>停车用户</span><span class="platform">移动 App</span></div>
         <div class="preview"><div class="preview-device phone"><img src="../assets/gtt/user-map.jpg" alt="停车用户端地图与附近停车场界面"></div></div>
         <div class="card-copy"><h2>找位、付费，安心停车。</h2><p>浏览附近停车区域，选择车辆和时长，查看费用并启动停车会话，随时查看与续停。</p><span class="card-action">体验停车用户端 <span aria-hidden="true">↗</span></span></div>
-        <button class="card-select" aria-label="展开停车用户端" aria-pressed="false"></button>
-      </article>
-      <article class="role-card" data-role="officer">
-        <div class="card-top"><span class="role-type">巡查员</span></div>
-        <div class="preview"><div class="preview-device phone"><img src="../assets/gtt/officer-check.jpg" alt="巡查员端车牌查询与停车会话核验界面"></div></div>
-        <div class="card-copy"><h2>核验车牌，确认状态。</h2><p>开始巡查班次，查询车辆是否处于有效停车或宽限期，并为过期停车记录模拟违规通知。</p><span class="card-action">体验巡查员端 <span aria-hidden="true">↗</span></span></div>
-        <button class="card-select" aria-label="展开巡查员端" aria-pressed="false"></button>
-      </article>
-      <article class="role-card" data-role="manager">
-        <div class="card-top"><span class="role-type">管理员</span></div>
-        <div class="preview"><div class="preview-device desktop"><div class="window-chrome"><i></i><i></i><i></i></div><img src="../assets/gtt/manager-map.jpg" alt="管理员端停车区域地图与停车场管理界面"></div></div>
+      </a>
+      <a class="role-card" href="view.html?role=officer" aria-label="体验巡查员端">
+        <div class="card-top"><span>巡查员</span><span class="platform">移动 App</span></div>
+        <div class="preview"><div class="preview-device phone"><img src="../assets/gtt/officer-check.jpg" alt="巡查员端车牌查询与会话核验界面"></div></div>
+        <div class="card-copy"><h2>核验车牌，确认状态。</h2><p>开始巡查班次，查询车辆的有效停车与宽限状态，为过期停车记录模拟违规通知。</p><span class="card-action">体验巡查员端 <span aria-hidden="true">↗</span></span></div>
+      </a>
+      <a class="role-card" href="view.html?role=manager" aria-label="体验管理员端">
+        <div class="card-top"><span>管理员</span><span class="platform">管理 Web 端</span></div>
+        <div class="preview"><div class="preview-device desktop"><div class="window-chrome"><i></i><i></i><i></i></div><img src="../assets/gtt/manager-map.jpg" alt="原 Flutter 管理员端停车场与地图界面"></div></div>
         <div class="card-copy"><h2>管理区域，掌握运营。</h2><p>维护停车区域和车位，配置日间与夜间费率，通过价格模拟、会话与占用统计观察运营情况。</p><span class="card-action">体验管理员端 <span aria-hidden="true">↗</span></span></div>
-        <button class="card-select" aria-label="展开管理员端" aria-pressed="false"></button>
-      </article>
+      </a>
+      <a class="role-card" href="view.html?role=system" aria-label="体验系统后台">
+        <div class="card-top"><span>系统后台</span><span class="platform">系统管理 Web 端</span></div>
+        <div class="preview"><div class="preview-device desktop system-device"><div class="window-chrome"><i></i><i></i><i></i></div><img src="../assets/gtt/system-dashboard.jpg" alt="原 Django 系统后台仪表盘与统计界面"></div></div>
+        <div class="card-copy"><h2>从账户权限，到全局规则。</h2><p>管理用户和城市权限，维护停车资源，审核违规申诉，配置全局宽限期与违规规则。</p><span class="card-action">体验系统后台 <span aria-hidden="true">↗</span></span></div>
+      </a>
     </section>
-    <section class="system-entry" aria-labelledby="system-title">
-      <a class="system-preview" href="system/admin/" target="_blank" rel="noopener" aria-label="打开系统后台"><img src="../assets/gtt/system-dashboard.jpg" alt="原 Django 系统后台：统计概览、全局规则与管理侧栏" loading="lazy"></a>
-      <div><p class="system-label">系统管理后台</p><h2 id="system-title">从账户权限，到全局规则。</h2><p>保留项目原有的 Django / Unfold 界面与定制仪表盘。管理用户及城市权限、维护停车资源、审核违规申诉，配置全局宽限期与违规规则。</p><a class="system-button" href="system/admin/" target="_blank" rel="noopener">体验系统后台</a><span class="system-note">独立于 Flutter 管理员端 · 无需登录 · 本地模拟数据</span></div>
-    </section>
-    <div class="demo-help"><button id="reset">重置演示数据</button><p id="role-tip" class="role-tip">三端使用同一份本地演示数据，可随时切换视角。</p></div>
   </main>
-  <footer>保留原 Flutter 与 Django 后台界面。示例地图默认以都灵理工大学主校区为中心。<br>付款、识别与违规通知仅用于演示，修改仅保存在当前浏览器。</footer>
-  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
-  <script src="experience.js?v=system-v1"></script>
+  <footer>原 Flutter / Django 界面 · 本地模拟数据<br>付款、识别与违规通知仅用于演示，不产生真实交易。</footer>
 </body>
 </html>

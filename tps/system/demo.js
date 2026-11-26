@@ -171,6 +171,7 @@
   const ready=fetch(BASE+'/seed.json').then(r=>{if(!r.ok)throw new Error('Demo data failed to load.');return r.json()}).then(d=>{
     seed=d;try{data=JSON.parse(localStorage.getItem(KEY))||clone(seed);if(!data['users/customuser'])data=clone(seed)}catch{data=clone(seed)}
     const banner=document.createElement('div');banner.className='tps-demo-banner';banner.innerHTML='<span>系统后台演示 · 原 Django / Unfold 界面 · 修改仅保存在本浏览器</span><a href="/portfolio/tps/">返回 TPS</a>';document.body.prepend(banner);
+    banner.querySelector('a').target='_top';
     const reset=document.createElement('button');reset.type='button';reset.textContent='重置';reset.onclick=()=>{if(confirm('Restore the fictional admin demo data?')){localStorage.removeItem(KEY);location.reload()}};banner.append(reset);
     if(page.kind==='list')renderList();
     if(['change','add'].includes(page.kind))fillForm();
@@ -179,6 +180,7 @@
   }).catch(e=>toast(e.message));
 
   document.addEventListener('htmx:configRequest',e=>{if(String(e.detail.path).includes('/admin/'))e.preventDefault()});
+  window.addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data==='tps-system-reset'){localStorage.removeItem(KEY);location.reload()}});
   document.addEventListener('change',e=>{
     if(e.target.id!=='action-toggle'&&e.target.name!=='_selected_action')return;
     const boxes=[...document.querySelectorAll('[name="_selected_action"]')];
