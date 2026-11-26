@@ -1,5 +1,39 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TPS 原版界面 · 在线体验</title><style>
-*{box-sizing:border-box}body{margin:0;background:#e9ecf0;font:14px "Segoe UI","Microsoft YaHei",sans-serif;color:#273149}header{height:52px;background:#f7f8fa;border-bottom:1px solid #cfd5df;padding:0 24px;display:flex;align-items:center;justify-content:space-between}header b{font-size:21px;color:#261346}a{color:inherit;text-decoration:none}.toolbar{display:flex;justify-content:center;gap:7px;padding:13px 16px 9px;flex-wrap:wrap}button{font:inherit;cursor:pointer;color:#4a5166;background:transparent;border:1px solid #c5cbd7;border-radius:9px;padding:8px 17px}button[aria-pressed=true]{background:#261450;color:#fff;border-color:#261450}button:focus-visible,a:focus-visible{outline:3px solid #599ceb;outline-offset:3px}.note{text-align:center;font-size:12px;color:#666d80;line-height:1.8;margin:0 16px 13px}.stage{display:flex;justify-content:center;padding:0 16px 24px}.frame{padding:8px;background:#161923;border:1px solid #737985;border-radius:36px;box-shadow:0 12px 35px #25334b25;width:430px;max-width:100%;height:calc(100dvh - 175px);min-height:630px;max-height:930px;overflow:hidden}.frame iframe{width:100%;height:100%;border:0;border-radius:27px;background:#020b3c;display:block}.manager .stage{display:block;overflow:auto}.manager .frame{width:100%;min-width:1150px;height:calc(100dvh - 170px);min-height:760px;max-height:none;border-radius:16px;padding:0;background:#020b3c;box-shadow:0 8px 30px #25334b18}.manager iframe{border-radius:15px}.reset{font-size:12px;padding:8px 11px;border-color:transparent;text-decoration:underline}footer{text-align:center;font-size:12px;color:#767d8d;line-height:1.8;padding:0 16px 20px}@media(max-width:520px){header{padding:0 14px}.toolbar{padding-top:11px}button{font-size:13px;padding:8px 13px}.note{font-size:11px}.stage{padding:0 10px 18px}.frame{min-height:640px;height:calc(100dvh - 190px)}.manager .frame{min-height:740px}}
-</style></head><body><header><b>TPS</b><a href="../project.html?id=gtt">返回作品集</a></header><nav class="toolbar" aria-label="选择角色"><button data-role="user" aria-pressed="true">停车用户</button><button data-role="officer" aria-pressed="false">巡查员</button><button data-role="manager" aria-pressed="false">管理员</button><button class="reset" id="reset">重置演示数据</button></nav><p class="note">原 Flutter 界面 · 本地示例地图与模拟接口　｜　演示登录：demo@tps.example / Demo123!<br><span id="tip">用户端可用车辆 DEMO004；巡查员可查询 DEMO001（有效）、DEMO002（过期）、DEMO003（初始宽限期）。</span></p><main class="stage"><div class="frame"><iframe id="app-frame" src="user/?v=pointer-v2" title="TPS 原始用户端界面" allow="clipboard-write"></iframe></div></main><footer>付款、车牌识别与执法通知均为演示，不产生实际交易。数据修改仅保存在本浏览器。</footer><script>
-const frame=document.getElementById('app-frame');document.querySelectorAll('[data-role]').forEach(button=>button.onclick=()=>{const role=button.dataset.role;document.body.classList.toggle('manager',role==='manager');document.querySelectorAll('[data-role]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));frame.title='TPS 原始'+button.textContent+'界面';frame.src=role+'/?v=pointer-v2';document.getElementById('tip').textContent=role==='manager'?'管理员端保留原桌面布局；手机上可横向滚动查看。':'用户端可用车辆 DEMO004；巡查员可查询 DEMO001（有效）、DEMO002（过期）、DEMO003（初始宽限期）。'});document.getElementById('reset').onclick=()=>{if(confirm('清除本浏览器中的 TPS 演示修改并恢复初始数据？'))frame.contentWindow.postMessage('tps-reset',location.origin)};
-</script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TPS 三端体验 · 智能停车系统</title>
+  <link rel="stylesheet" href="experience.css?v=cards-v1">
+</head>
+<body>
+  <header class="site-header"><a class="wordmark" href="../project.html?id=gtt">TPS<span>智能停车系统</span></a><a class="back-link" href="../project.html?id=gtt">返回作品集 <span aria-hidden="true">↗</span></a></header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">一次停车，三个视角</p><h1>从哪一端开始？</h1><p id="instruction">移动鼠标，看看不同角色。点击卡片，进入原版界面体验。</p><p class="login-hint">演示登录：demo@tps.example / Demo123!</p></div><button id="overview" class="overview" hidden>↖ 返回三端概览</button></div>
+    <section id="experiences" class="experiences" aria-label="TPS 三端交互体验">
+      <article class="role-card" data-role="user">
+        <div class="card-top"><span class="role-type">停车用户</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+        <div class="preview"><div class="preview-device phone"><img src="../assets/gtt/user-map.jpg" alt="停车用户端地图与附近停车场界面"></div></div>
+        <div class="card-copy"><h2>找位、付费，安心停车。</h2><p>浏览附近停车区域，选择车辆和时长，查看费用并启动停车会话，随时查看与续停。</p><span class="card-action">体验停车用户端 <span aria-hidden="true">↗</span></span></div>
+        <button class="card-select" aria-label="展开停车用户端" aria-pressed="false"></button>
+      </article>
+      <article class="role-card" data-role="officer">
+        <div class="card-top"><span class="role-type">巡查员</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+        <div class="preview"><div class="preview-device phone"><img src="../assets/gtt/officer-check.jpg" alt="巡查员端车牌查询与停车会话核验界面"></div></div>
+        <div class="card-copy"><h2>核验车牌，确认状态。</h2><p>开始巡查班次，查询车辆是否处于有效停车或宽限期，并为过期停车记录模拟违规通知。</p><span class="card-action">体验巡查员端 <span aria-hidden="true">↗</span></span></div>
+        <button class="card-select" aria-label="展开巡查员端" aria-pressed="false"></button>
+      </article>
+      <article class="role-card" data-role="manager">
+        <div class="card-top"><span class="role-type">管理员</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+        <div class="preview"><div class="preview-device desktop"><div class="window-chrome"><i></i><i></i><i></i></div><img src="../assets/gtt/manager-map.jpg" alt="管理员端停车区域地图与停车场管理界面"></div></div>
+        <div class="card-copy"><h2>管理区域，掌握运营。</h2><p>维护停车区域和车位，配置日间与夜间费率，通过价格模拟、会话与占用统计观察运营情况。</p><span class="card-action">体验管理员端 <span aria-hidden="true">↗</span></span></div>
+        <button class="card-select" aria-label="展开管理员端" aria-pressed="false"></button>
+      </article>
+    </section>
+    <div class="demo-help"><button id="reset">重置演示数据</button><p id="role-tip" class="role-tip">三端使用同一份本地演示数据，可随时切换视角。</p></div>
+  </main>
+  <footer>保留原 Flutter 界面。地图为本地示例，默认中心为都灵理工大学主校区。<br>付款、识别与违规通知仅用于演示，修改仅保存在当前浏览器。</footer>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+  <script src="experience.js?v=cards-v1"></script>
+</body>
+</html>
