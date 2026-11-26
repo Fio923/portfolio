@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>TPS 三端体验 · 智能停车系统</title>
-  <link rel="stylesheet" href="experience.css?v=cards-v2">
+  <link rel="stylesheet" href="experience.css?v=system-v1">
 </head>
 <body>
   <header class="site-header"><a class="wordmark" href="../project.html?id=gtt">TPS<span>智能停车系统</span></a><a class="back-link" href="../project.html?id=gtt">返回作品集 <span aria-hidden="true">↗</span></a></header>
@@ -30,10 +30,14 @@
         <button class="card-select" aria-label="展开管理员端" aria-pressed="false"></button>
       </article>
     </section>
+    <section class="system-entry" aria-labelledby="system-title">
+      <a class="system-preview" href="system/admin/" target="_blank" rel="noopener" aria-label="打开系统后台"><img src="../assets/gtt/system-dashboard.jpg" alt="原 Django 系统后台：统计概览、全局规则与管理侧栏" loading="lazy"></a>
+      <div><p class="system-label">系统管理后台</p><h2 id="system-title">从账户权限，到全局规则。</h2><p>保留项目原有的 Django / Unfold 界面与定制仪表盘。管理用户及城市权限、维护停车资源、审核违规申诉，配置全局宽限期与违规规则。</p><a class="system-button" href="system/admin/" target="_blank" rel="noopener">体验系统后台</a><span class="system-note">独立于 Flutter 管理员端 · 无需登录 · 本地模拟数据</span></div>
+    </section>
     <div class="demo-help"><button id="reset">重置演示数据</button><p id="role-tip" class="role-tip">三端使用同一份本地演示数据，可随时切换视角。</p></div>
   </main>
-  <footer>保留原 Flutter 界面。地图为本地示例，默认中心为都灵理工大学主校区。<br>付款、识别与违规通知仅用于演示，修改仅保存在当前浏览器。</footer>
+  <footer>保留原 Flutter 与 Django 后台界面。示例地图默认以都灵理工大学主校区为中心。<br>付款、识别与违规通知仅用于演示，修改仅保存在当前浏览器。</footer>
   <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
-  <script src="experience.js?v=cards-v2"></script>
+  <script src="experience.js?v=system-v1"></script>
 </body>
 </html>

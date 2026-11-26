@@ -1,0 +1,1423 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"  x-data="{ adminTheme: $persist('auto').as('adminTheme') }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak>
+    <head><meta charset="utf-8">
+        <title> driver1@tps.example (user) | Change user | Django site admin</title>
+
+        <link href="/portfolio/tps/system/static/unfold/fonts/inter/styles.css" rel="stylesheet">
+        <link href="/portfolio/tps/system/static/unfold/fonts/material-symbols/styles.css" rel="stylesheet">
+
+        
+            <link href="/portfolio/tps/system/static/css/custom_admin.css" rel="stylesheet">
+        
+
+        
+
+        <link href="/portfolio/tps/system/static/unfold/css/styles.css" rel="stylesheet">
+        <link href="/portfolio/tps/system/static/unfold/css/simplebar/simplebar.css" rel="stylesheet">
+
+        <script src="/portfolio/tps/system/static/unfold/js/alpine/alpine.anchor.js" defer></script>
+        <script src="/portfolio/tps/system/static/unfold/js/alpine/alpine.persist.js" defer></script>
+        <script src="/portfolio/tps/system/static/unfold/js/alpine/alpine.sort.js" defer></script>
+        <script src="/portfolio/tps/system/static/unfold/js/alpine/alpine.resize.js" defer></script>
+        <script src="/portfolio/tps/system/static/unfold/js/alpine/alpine.js" defer></script>
+        <script src="/portfolio/tps/system/static/unfold/js/htmx/htmx.js"></script>
+        <script src="/portfolio/tps/system/static/unfold/js/chart/chart.js"></script>
+
+        
+            <script src="/portfolio/tps/system/static/js/custom_admin.js"></script>
+        
+
+        
+
+        
+    <script src="/portfolio/tps/system/static/demo-i18n.js"></script>
+    <script src="/portfolio/tps/system/static/admin/js/vendor/jquery/jquery.min.js"></script>
+<script src="/portfolio/tps/system/static/admin/js/jquery.init.js"></script>
+<script src="/portfolio/tps/system/static/admin/js/core.js"></script>
+<script src="/portfolio/tps/system/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script src="/portfolio/tps/system/static/admin/js/actions.js"></script>
+<script src="/portfolio/tps/system/static/admin/js/urlify.js"></script>
+<script src="/portfolio/tps/system/static/admin/js/prepopulate.js"></script>
+<script src="/portfolio/tps/system/static/admin/js/vendor/xregexp/xregexp.min.js"></script>
+
+
+        <script src="/portfolio/tps/system/static/unfold/js/app.js"></script>
+
+        
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+
+        
+            <meta name="robots" content="NONE,NOARCHIVE">
+        
+    <meta name="tps-admin-demo" content="true"><link rel="stylesheet" href="/portfolio/tps/system/demo.css?v=2"><script>window.TPS_ADMIN_PAGE={"model": "users/customuser", "kind": "change"};</script><script src="/portfolio/tps/system/demo.js?v=3" charset="utf-8" defer></script></head>
+
+    <body class="antialiased bg-base-50 font-sans text-font-default-light text-sm dark:bg-base-900 dark:text-font-default-dark  app-users model-customuser change-form" data-admin-utc-offset="3600"
+          x-data="{
+                  activeTab: 'general',
+                  sidebarMobileOpen: false,
+                  sidebarDesktopOpen: (localStorage.getItem('sidebarDesktopOpen') !== null) ? (localStorage.getItem('sidebarDesktopOpen') == '1') : true
+                  }"
+          x-init="
+                  activeTab = window.location.hash?.replace('#', '') || 'general';
+                  $watch('sidebarDesktopOpen', value => localStorage.setItem('sidebarDesktopOpen', value ? '1' : '0'));
+                 "
+    >
+        
+            <style id="unfold-theme-colors">
+                :root {
+                    
+
+                    
+                        
+                            --color-base-50: oklch(98.5% .002 247.839);
+                        
+                            --color-base-100: oklch(96.7% .003 264.542);
+                        
+                            --color-base-200: oklch(92.8% .006 264.531);
+                        
+                            --color-base-300: oklch(87.2% .01 258.338);
+                        
+                            --color-base-400: oklch(70.7% .022 261.325);
+                        
+                            --color-base-500: oklch(55.1% .027 264.364);
+                        
+                            --color-base-600: oklch(44.6% .03 256.802);
+                        
+                            --color-base-700: oklch(37.3% .034 259.733);
+                        
+                            --color-base-800: oklch(27.8% .033 256.848);
+                        
+                            --color-base-900: oklch(21% .034 264.665);
+                        
+                            --color-base-950: oklch(13% .028 261.692);
+                        
+                    
+                        
+                            --color-primary-50: oklch(97.7% .014 308.299);
+                        
+                            --color-primary-100: oklch(94.6% .033 307.174);
+                        
+                            --color-primary-200: oklch(90.2% .063 306.703);
+                        
+                            --color-primary-300: oklch(82.7% .119 306.383);
+                        
+                            --color-primary-400: oklch(71.4% .203 305.504);
+                        
+                            --color-primary-500: oklch(62.7% .265 303.9);
+                        
+                            --color-primary-600: oklch(55.8% .288 302.321);
+                        
+                            --color-primary-700: oklch(49.6% .265 301.924);
+                        
+                            --color-primary-800: oklch(43.8% .218 303.724);
+                        
+                            --color-primary-900: oklch(38.1% .176 304.987);
+                        
+                            --color-primary-950: oklch(29.1% .149 302.717);
+                        
+                    
+                        
+                            --color-font-subtle-light: var(--color-base-500);
+                        
+                            --color-font-subtle-dark: var(--color-base-400);
+                        
+                            --color-font-default-light: var(--color-base-600);
+                        
+                            --color-font-default-dark: var(--color-base-300);
+                        
+                            --color-font-important-light: var(--color-base-900);
+                        
+                            --color-font-important-dark: var(--color-base-100);
+                        
+                    
+                }
+            </style>
+        
+
+        
+    <div id="page" class="flex max-w-full min-h-screen ">
+        
+            
+                
+
+<div class="relative z-50">
+    <div class="fixed hidden xl:relative xl:block w-[288px] " x-bind:class="{'xl:hidden!': !sidebarDesktopOpen, 'block!': sidebarMobileOpen}">
+        <div class="bg-base-50 relative z-30 dark:bg-base-900">
+            <div id="nav-sidebar" class="bg-base-50 border-r border-base-200 bottom-0 fixed max-h-screen top-0 w-[288px] dark:border-base-800 dark:bg-base-900 ">
+                
+                    
+
+<nav id="nav-sidebar-inner" class="bg-base-50 flex flex-col min-h-screen dark:text-font-default-dark dark:bg-base-950/20 ">
+    
+
+<div class="border-b border-base-200 flex gap-3 items-center h-[65px] mb-6 dark:border-base-800 px-3 " >
+    <div class="bg-transparent flex font-semibold gap-3 grow min-w-0 h-[64px] items-center px-3 "
+         
+    >
+        
+            
+
+
+    <a href="/portfolio/tps/system/admin/" class="bg-primary-600 flex h-[38px] items-center justify-center rounded-default shrink-0 text-white text-xs w-[38px]">
+    <span class="material-symbols-outlined md-18">settings</span>
+    </a>
+
+
+<div class="flex flex-col gap-1.5 grow justify-center min-w-0">
+    <div class="text-important leading-none tracking-tight *:truncate xl:text-base">
+        
+    <div id="site-name">
+    
+        <a href="/portfolio/tps/system/admin/">
+            TPS Admin Panel
+        </a>
+    
+</div>
+
+
+    </div>
+
+    
+</div>
+
+        
+
+        
+    </div>
+
+    <span class="material-symbols-outlined block cursor-pointer h-[18px] xl:hidden! hover:text-base-700 dark:hover:text-base-200" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+        close
+    </span>
+
+    
+
+
+
+</div>
+
+
+    
+
+
+    
+        <div class="mb-2.5 mx-3 relative" x-data="searchDropdown()" x-on:keydown.window="applyShortcut($event)" x-on:click.outside="openSearchResults = false">
+            <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
+                <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
+
+                <input type="search"
+                       id="nav-filter"
+                       name="s"
+                       x-ref="searchInput"
+                       x-on:focus="openSearchResults = true; currentIndex = 0"
+                       x-on:keydown="openSearchResults = true;"
+                       x-on:keydown.arrow-down.prevent="nextItem()"
+                       x-on:keydown.arrow-up.prevent="prevItem()"
+                       x-on:keydown.escape.prevent="openSearchResults = false; if ($refs.searchInput.value === '') { $refs.searchInput.blur() } else { $refs.searchInput.value = '' }"
+                       x-on:keydown.enter.prevent="selectItem()"
+                       x-on:search="currentIndex = 0"
+                       hx-get="/portfolio/tps/system/admin/search/"
+                       hx-trigger="keyup changed delay:500ms"
+                       hx-target="#search-results"
+                       class="grow font-medium min-w-0 overflow-hidden p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                       placeholder="Search apps and models..."
+                       aria-label="Filter navigation items">
+
+                <kbd class="bg-base-50 border border-base-200 font-sans text-xs text-font-subtle-light rounded-xs px-1 whitespace-nowrap dark:bg-white/[.04] dark:border-base-700 dark:text-font-subtle-dark">
+    t
+</kbd>
+
+            </div>
+
+            <div id="search-results" x-show="openSearchResults"></div>
+        </div>
+    
+
+
+
+    
+        
+
+
+    <div class="h-0 grow overflow-auto" data-simplebar>
+        
+            
+                
+
+                <div class="hidden mb-2 has-[ol]:has-[li]:block" x-data="{navigationOpen: false}">
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark cursor-pointer hover:text-primary-600 dark:hover:text-primary-500" x-on:click="navigationOpen = !navigationOpen">
+                            User Management
+
+                            
+
+
+                            
+                                <span class="material-symbols-outlined ml-auto transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
+                                    chevron_right
+                                </span>
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-1 px-6" x-show="navigationOpen">
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/users/customuser/?role__exact=superuser" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                admin_panel_settings
+                                            </span>
+                                        
+
+                                        <span>Admins</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/users/customuser/?role__exact=manager" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                supervisor_account
+                                            </span>
+                                        
+
+                                        <span>Managers</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/users/customuser/?role__exact=controller" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                local_police
+                                            </span>
+                                        
+
+                                        <span>Patrollers</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/users/customuser/?role__exact=user" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                group
+                                            </span>
+                                        
+
+                                        <span>Customers</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/vehicles/vehicle/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                directions_car
+                                            </span>
+                                        
+
+                                        <span>Vehicles</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/users/shift/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                schedule
+                                            </span>
+                                        
+
+                                        <span>Patroller Shifts</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-2 has-[ol]:has-[li]:block" x-data="{navigationOpen: false}">
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark cursor-pointer hover:text-primary-600 dark:hover:text-primary-500" x-on:click="navigationOpen = !navigationOpen">
+                            Infrastructure
+
+                            
+
+
+                            
+                                <span class="material-symbols-outlined ml-auto transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
+                                    chevron_right
+                                </span>
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-1 px-6" x-show="navigationOpen">
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/parkings/city/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                location_city
+                                            </span>
+                                        
+
+                                        <span>Cities</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/parkings/parking/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                local_parking
+                                            </span>
+                                        
+
+                                        <span>Parkings</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/parkings/spot/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                grid_on
+                                            </span>
+                                        
+
+                                        <span>Spots</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+            
+                
+
+                <div class="hidden mb-2 has-[ol]:has-[li]:block" x-data="{navigationOpen: false}">
+                    
+
+                    
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark cursor-pointer hover:text-primary-600 dark:hover:text-primary-500" x-on:click="navigationOpen = !navigationOpen">
+                            Sessions
+
+                            
+
+
+                            
+                                <span class="material-symbols-outlined ml-auto transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
+                                    chevron_right
+                                </span>
+                            
+                        </h2>
+                    
+
+                    <ol class="flex flex-col gap-1 px-6" x-show="navigationOpen">
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/vehicles/parkingsession/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                timer
+                                            </span>
+                                        
+
+                                        <span>Parking Sessions</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                                <li>
+                                    <a href="/portfolio/tps/system/admin/vehicles/fine/" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 ">
+                                        
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
+                                                gavel
+                                            </span>
+                                        
+
+                                        <span>Violations</span>
+
+                                        
+
+                                    </a>
+                                </li>
+                            
+                        
+                    </ol>
+                </div>
+            
+        
+    </div>
+
+    
+
+
+    
+
+    <div class="border-t border-base-200 px-6 py-3 relative dark:border-base-800" x-data="{ openUserLinks: false }">
+    <nav class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 rounded-default shadow-lg bottom-[73px] left-3 right-3 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openUserLinks" x-transition x-on:click.outside="openUserLinks = false">
+        
+
+
+    <div class="border-b border-base-200 flex flex-row gap-1 mb-1 pb-1 px-2 dark:border-base-700">
+        <a class="cursor-pointer flex flex-row grow px-2 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+           x-on:click="adminTheme = 'light'"
+           x-bind:class="adminTheme == 'light'  && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+            <span class="material-symbols-outlined mr-2">light_mode</span>
+            <span class="leading-none self-center">Light</span>
+        </a>
+
+        <a class="cursor-pointer flex flex-row grow leading-none -ml-1 px-2 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+           x-on:click="adminTheme = 'dark'"
+           x-bind:class="adminTheme == 'dark' && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+            <span class="material-symbols-outlined mr-2">dark_mode</span>
+            <span class="leading-none self-center">Dark</span>
+        </a>
+
+        <a class="cursor-pointer flex flex-row grow -mr-1 px-2 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+           x-on:click="adminTheme = 'auto'"
+           x-bind:class="adminTheme == 'auto' && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+            <span class="material-symbols-outlined mr-2">computer</span>
+            <span class="leading-none self-center">System</span>
+        </a>
+    </div>
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+
+        
+
+
+
+    <a href="/portfolio/tps/" target="_blank" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+        View site
+    </a>
+
+
+
+    
+
+
+<div class="border-t border-base-200 mt-1 pt-1 dark:border-base-700">
+    <form id="logout-form" method="post" action="/portfolio/tps/system/admin/logout/" class="mx-1">
+        
+
+        <button type="submit" class="bg-none flex cursor-pointer items-center px-3 py-1.5 text-left text-red-500 rounded-default w-full hover:bg-red-100 dark:hover:bg-red-500/20 dark:hover:text-red-500">
+            Log out <span class="ml-auto material-symbols-outlined text-red-500 dark:text-red-500">logout</span>
+        </button>
+    </form>
+</div>
+
+    </nav>
+
+    <div class="cursor-pointer flex flex-row gap-3 items-center min-h-[64px] -mx-6 -my-3 px-6 py-3 hover:bg-base-100 dark:hover:bg-base-800" x-on:click="openUserLinks = !openUserLinks" x-bind:class="{'bg-base-100 dark:bg-base-800': openUserLinks}">
+        
+            <div class="bg-white bg-cover h-[38px] flex items-center justify-center rounded-default select-none shadow min-w-[38px] w-[38px] dark:bg-base-700" >
+                
+                    <span class="material-symbols-outlined text-base-400">person</span>
+                
+            </div>
+        
+
+        <div class="flex flex-col select-none min-w-0">
+            <div class="font-semibold text-important tracking-tight truncate">
+                Demo Admin
+            </div>
+
+            
+                <div class="font-normal text-subtle text-xs truncate">
+                    admin@tps.example
+                </div>
+            
+        </div>
+
+        <span class="material-symbols-outlined ml-auto select-none text-font-default-light dark:text-font-default-dark">
+            unfold_more
+        </span>
+    </div>
+</div>
+
+</nav>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+        
+
+        <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 ">
+            
+
+
+    
+        <div class="bg-white border-b border-base-200 mb-6 px-4 z-40 dark:bg-base-900 dark:border-base-800 dark:text-font-default-dark ">
+            <div class="container flex items-center h-16 mx-auto py-4">
+                <div id="header-inner" class="flex items-center relative w-full">
+                    <div class="flex items-center w-full">
+                        
+                            
+                                
+                                    
+
+<div class="flex flex-row grow font-semibold items-center min-w-0 mr-3">
+    
+        <span class="cursor-pointer flex flex-row items-center">
+            <span class="material-symbols-outlined hidden! xl:block!" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen; localStorage.setItem('sidebarDesktopOpen', sidebarDesktopOpen ? '1' : '0');">
+                dock_to_right
+            </span>
+
+            <span class="material-symbols-outlined block! xl:hidden!" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+                dock_to_right
+            </span>
+        </span>
+    
+
+    <span class="block bg-base-200 h-5 mx-3 w-px dark:bg-base-700"></span>
+
+    
+
+
+    
+        
+
+        <a href="/portfolio/tps/system/admin/users/customuser/" class="block h-[18px] mr-3" title="Go back">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+        </a>
+    
+
+
+
+    <h1 class="overflow-hidden leading-5 text-ellipsis text-font-important-light whitespace-nowrap xl:text-base dark:text-font-important-dark">
+        <a href="/portfolio/tps/system/admin/users/" class="align-middle inline-block leading-5 tracking-tight">
+        User Management
+        </a ><span class="material-symbols-outlined inline-block align-middle leading-5 mx-2 text-base-400 dark:text-base-500">chevron_right</span><a href="/portfolio/tps/system/admin/users/customuser/" class="align-middle inline-block leading-5 tracking-tight">
+        Users
+        </a ><span class="material-symbols-outlined inline-block align-middle leading-5 mx-2 text-base-400 dark:text-base-500">chevron_right</span><a href="/portfolio/tps/system/admin/users/customuser/31/change/" class="align-middle inline-block leading-5 tracking-tight">
+        Driver1@tps.example (user)
+        </a >
+
+
+        
+    </h1>
+</div>
+
+                                
+
+                                
+                                    
+
+<div class="flex items-center ml-auto">
+    
+
+    
+
+
+    <div class="flex flex-row items-center ml-auto" x-data="{ showActions: false }" x-on:click.outside="showActions = false">
+        <a href="#"  
+class="font-medium flex group items-center gap-2 px-3 py-2 rounded-default justify-center whitespace-nowrap cursor-pointer
+
+    border border-base-200 bg-white text-font-important-light dark:border-base-700 dark:bg-transparent dark:text-font-important-dark
+ !px-0 w-[38px] lg:hidden" 
+ x-on:click='showActions = !showActions'>
+
+            <span class="material-symbols-outlined">more_horiz</span>
+        
+</a>
+
+
+        <ul class="bg-white container hidden flex-col font-medium mx-auto left-0 right-0 lg:flex lg:flex-row lg:mb-0 lg:mt-0 max-lg:absolute max-lg:top-16 dark:bg-base-900" x-bind:class="{'max-lg:flex': showActions}">
+            
+                
+
+                
+                    <li class="min-lg:last:rounded-r-default min-lg:first:rounded-l-default border-base-200 dark:hover:text-primary-500 max-lg:-mt-px border max-lg:first:rounded-t-default max-lg:last:rounded-b-default hover:text-primary-600 min-lg:-ml-px dark:border-base-700" ><a href="/portfolio/tps/system/admin/users/customuser/31/history/"class="cursor-pointer flex grow items-center gap-2 px-3 py-2 text-left whitespace-nowrap"  
+
+       ><span class="material-symbols-outlined">
+                history
+            </span>
+        
+
+        History
+
+        
+    </a></li>
+                
+            
+
+            
+
+            
+        </ul>
+    </div>
+
+
+
+    
+        
+    
+        
+
+
+    
+    
+
+
+
+    <div class="flex flex-row items-center ml-4">
+        <a href="/portfolio/tps/system/admin/users/customuser/add/" class="addlink bg-primary-600 flex items-center h-[38px] justify-center -my-1 rounded-full w-[38px]" title="Add user">
+            <span class="material-symbols-outlined text-white">add</span>
+        </a>
+    </div>
+
+
+    
+
+    
+</div>
+
+                                
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+
+            
+                <div class="px-4">
+                    <div class="container mx-auto">
+                        
+
+                    </div>
+                </div>
+            
+
+            <div class="@container px-4 pb-4 grow">
+                <div id="content" class="container mx-auto colM">
+                    
+                        
+
+
+    
+
+
+                    
+
+                    
+    <div id="content-main">
+        
+
+
+
+
+        
+
+        
+
+        <form   x-bind:action="activeTab && activeTab !== 'general' ? window.location.pathname + window.location.search + '#' + activeTab : window.location.pathname + window.location.search" method="post" id="customuser_form"  novalidate>
+            
+
+            
+
+            
+
+            <div class="flex flex-col gap-6">
+                
+
+                
+
+                
+
+                
+                    
+                        
+                            
+                                
+
+<fieldset class="module relative " x-show="activeTab == 'general'">
+    
+
+    
+
+    
+
+    
+
+    <div class="rounded-default border-base-200 aligned dark:border-base-800 border shadow-xs">
+        
+            
+
+<div class="form-row field-row group/row ">
+    
+        
+            <div class="field-line grow group flex field-email py-2.5 flex-col group/line px-3" >
+                
+                    
+                        <div class="">
+    <label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark required" for="id_email">Email <span class="text-red-600">*</span></label>
+</div>
+
+<div class="grow relative">
+    
+        <input type="email" name="email" value="driver1@tps.example" class="border border-base-200 bg-white font-medium min-w-20 placeholder-base-400 rounded-default shadow-xs text-font-default-light text-sm focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 group-[.errors]:border-red-600 focus:group-[.errors]:outline-red-600 dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark dark:group-[.errors]:border-red-500 dark:focus:group-[.errors]:outline-red-500 dark:scheme-dark group-[.primary]:border-transparent disabled:!bg-base-50 dark:disabled:!bg-base-800 px-3 py-2 w-full max-w-2xl " maxlength="254" required id="id_email">
+    
+
+    
+
+    
+</div>
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+            
+
+<div class="form-row field-row group/row last">
+    
+        
+            <div class="field-line grow group flex py-2.5 flex-col group/line px-3" >
+                
+                    
+                        <div class="">
+    <label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark mb-2">Password (Hash)</label>
+</div>
+
+<div class="grow relative">
+    
+        <div class="readonly break-words max-w-2xl py-2 text-sm *:rounded-default bg-base-50 border border-base-200 font-medium px-3 rounded-default shadow-xs dark:border-base-700 dark:bg-base-800">
+        <div style="display: flex; align-items: center; width: 100%;">
+            <div style="padding: 8px 12px; border-radius: 6px; word-break: break-all; border: 1px solid #d1d5db; flex-grow: 1; line-height: 1.4;">
+                !
+            </div>
+            <a href="../password/" class="bg-primary-600 hover:bg-primary-700 text-white" style="padding: 0 16px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; height: 38px; white-space: nowrap; cursor: pointer;margin-left: 10px;">
+               Change Password
+            </a>
+        </div>
+        </div>
+
+    
+
+    
+
+    
+</div>
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+    </div>
+
+    
+</fieldset>
+
+                            
+                        
+                            
+                                
+
+<fieldset class="module relative " x-show="activeTab == 'general'">
+    
+
+    
+        
+            <h2 class="bg-base-100 flex flex-row font-semibold h-[38px] items-center mb-4 px-3 rounded-default text-important dark:bg-white/[.02]  " >
+    
+        Personal info
+    
+</h2>
+
+        
+    
+
+    
+
+    
+
+    <div class="rounded-default border-base-200 aligned dark:border-base-800 border shadow-xs">
+        
+            
+
+<div class="form-row field-row group/row ">
+    
+        
+            <div class="field-line field-first_name grow group flex py-2.5 flex-col group/line px-3" >
+                
+                    
+                        <div class="">
+    <label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark" for="id_first_name">First name</label>
+</div>
+
+<div class="grow relative">
+    
+        <div class="max-w-2xl relative w-full">
+    
+
+    
+
+    <input type="text" name="first_name" value="Demo" class="border border-base-200 bg-white font-medium min-w-20 placeholder-base-400 rounded-default shadow-xs text-font-default-light text-sm focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 group-[.errors]:border-red-600 focus:group-[.errors]:outline-red-600 dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark dark:group-[.errors]:border-red-500 dark:focus:group-[.errors]:outline-red-500 dark:scheme-dark group-[.primary]:border-transparent disabled:!bg-base-50 dark:disabled:!bg-base-800 px-3 py-2 w-full max-w-2xl " maxlength="150" id="id_first_name">
+
+
+    
+
+    
+</div>
+    
+
+    
+
+    
+</div>
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+            
+
+<div class="form-row field-row group/row ">
+    
+        
+            <div class="field-line grow group flex py-2.5 flex-col group/line px-3 field-last_name" >
+                
+                    
+                        <div class="">
+    <label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark" for="id_last_name">Last name</label>
+</div>
+
+<div class="grow relative">
+    
+        <div class="max-w-2xl relative w-full">
+    
+
+    
+
+    <input type="text" name="last_name" value="Driver 1" class="border border-base-200 bg-white font-medium min-w-20 placeholder-base-400 rounded-default shadow-xs text-font-default-light text-sm focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 group-[.errors]:border-red-600 focus:group-[.errors]:outline-red-600 dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark dark:group-[.errors]:border-red-500 dark:focus:group-[.errors]:outline-red-500 dark:scheme-dark group-[.primary]:border-transparent disabled:!bg-base-50 dark:disabled:!bg-base-800 px-3 py-2 w-full max-w-2xl " maxlength="150" id="id_last_name">
+
+
+    
+
+    
+</div>
+    
+
+    
+
+    
+</div>
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+            
+
+<div class="form-row field-row group/row last">
+    
+        
+            <div class="field-line grow group flex field-role py-2.5 flex-col group/line px-3" >
+                
+                    
+                        <div class="">
+    <label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark required" for="id_role">Role <span class="text-red-600">*</span></label>
+</div>
+
+<div class="grow relative">
+    
+        <div class="grow relative max-w-2xl">
+    <select name="role" class="border border-base-200 bg-white font-medium min-w-20 placeholder-base-400 rounded-default shadow-xs text-font-default-light text-sm focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 group-[.errors]:border-red-600 focus:group-[.errors]:outline-red-600 dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark dark:group-[.errors]:border-red-500 dark:focus:group-[.errors]:outline-red-500 dark:scheme-dark group-[.primary]:border-transparent disabled:!bg-base-50 dark:disabled:!bg-base-800 px-3 py-2 w-full pr-8! max-w-2xl appearance-none text-ellipsis " id="id_role">
+            <option value="user" selected>User</option>
+
+            <option value="controller">Controller</option>
+
+            <option value="manager">Manager</option>
+
+            <option value="superuser">Superuser</option>
+
+    </select>
+
+    <span class="material-symbols-outlined absolute group-[.primary]:text-white pointer-events-none mr-[12px] right-0 text-base-400 top-0 top-1/2 hover:text-base-700 dark:text-base-500 dark:hover:text-base-200 -translate-y-1/2">expand_more</span>
+</div>
+    
+
+    
+
+    
+</div>
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+    </div>
+
+    
+</fieldset>
+
+                            
+                        
+                            
+                                
+
+<fieldset class="module relative " x-show="activeTab == 'general'">
+    
+
+    
+        
+            <h2 class="bg-base-100 flex flex-row font-semibold h-[38px] items-center mb-4 px-3 rounded-default text-important dark:bg-white/[.02]  " >
+    
+        Violations Info
+    
+</h2>
+
+        
+    
+
+    
+
+    
+
+    <div class="rounded-default border-base-200 aligned dark:border-base-800 border shadow-xs">
+        
+            
+
+<div class="form-row field-row group/row last">
+    
+        
+            <div class="field-line grow group flex py-2.5 flex-col group/line px-3 field-violations_count" >
+                
+                    
+                        <div class="">
+    <label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark required" for="id_violations_count">Violations count <span class="text-red-600">*</span></label>
+</div>
+
+<div class="grow relative">
+    
+        <input type="number" name="violations_count" value="1" class="border border-base-200 bg-white font-medium min-w-20 placeholder-base-400 rounded-default shadow-xs text-font-default-light text-sm focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 group-[.errors]:border-red-600 focus:group-[.errors]:outline-red-600 dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark dark:group-[.errors]:border-red-500 dark:focus:group-[.errors]:outline-red-500 dark:scheme-dark group-[.primary]:border-transparent disabled:!bg-base-50 dark:disabled:!bg-base-800 px-3 py-2 w-full max-w-2xl " required id="id_violations_count">
+    
+
+    
+
+    
+</div>
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+    </div>
+
+    
+</fieldset>
+
+                            
+                        
+                            
+                                
+
+<fieldset class="module relative " x-show="activeTab == 'general'">
+    
+
+    
+        
+            <h2 class="bg-base-100 flex flex-row font-semibold h-[38px] items-center mb-4 px-3 rounded-default text-important dark:bg-white/[.02]  " >
+    
+        Status &amp; Standing
+    
+</h2>
+
+        
+    
+
+    
+
+    
+
+    <div class="rounded-default border-base-200 aligned dark:border-base-800 border shadow-xs">
+        
+            
+
+<div class="form-row field-row group/row ">
+    
+        
+            <div class="field-line grow group field-is_active flex py-2.5 flex-col group/line px-3" >
+                
+                    
+                        
+    <div class="flex flex-row">
+        <input type="checkbox" name="is_active" class="appearance-none bg-base-300 block cursor-pointer h-5 relative rounded-full transition-colors w-8 min-w-8 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none after:absolute after:bg-white after:content-[&#x27;&#x27;] after:bg-red-300 after:h-3 after:rounded-full after:shadow-xs after:transition-all after:left-1 after:top-1 after:w-3 checked:bg-green-500 checked:after:left-4 dark:bg-base-600 dark:checked:bg-green-700 " id="id_is_active" checked>
+
+        <div class="flex flex-col">
+            <label class="font-semibold ml-2 text-sm text-font-important-light dark:text-font-important-dark" for="id_is_active">Is active</label>
+
+            
+
+            
+        </div>
+    </div>
+
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+            
+
+<div class="form-row field-row group/row ">
+    
+        
+            <div class="field-line grow group flex py-2.5 flex-col group/line px-3 field-is_staff" >
+                
+                    
+                        
+    <div class="flex flex-row">
+        <input type="checkbox" name="is_staff" class="appearance-none bg-base-300 block cursor-pointer h-5 relative rounded-full transition-colors w-8 min-w-8 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none after:absolute after:bg-white after:content-[&#x27;&#x27;] after:bg-red-300 after:h-3 after:rounded-full after:shadow-xs after:transition-all after:left-1 after:top-1 after:w-3 checked:bg-green-500 checked:after:left-4 dark:bg-base-600 dark:checked:bg-green-700 " id="id_is_staff">
+
+        <div class="flex flex-col">
+            <label class="font-semibold ml-2 text-sm text-font-important-light dark:text-font-important-dark" for="id_is_staff">Is staff</label>
+
+            
+
+            
+        </div>
+    </div>
+
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+            
+
+<div class="form-row field-row group/row last">
+    
+        
+            <div class="field-line field-is_superuser grow group flex py-2.5 flex-col group/line px-3" >
+                
+                    
+                        
+    <div class="flex flex-row">
+        <input type="checkbox" name="is_superuser" class="appearance-none bg-base-300 block cursor-pointer h-5 relative rounded-full transition-colors w-8 min-w-8 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none after:absolute after:bg-white after:content-[&#x27;&#x27;] after:bg-red-300 after:h-3 after:rounded-full after:shadow-xs after:transition-all after:left-1 after:top-1 after:w-3 checked:bg-green-500 checked:after:left-4 dark:bg-base-600 dark:checked:bg-green-700 " aria-describedby="id_is_superuser_helptext" id="id_is_superuser">
+
+        <div class="flex flex-col">
+            <label class="font-semibold ml-2 text-sm text-font-important-light dark:text-font-important-dark" for="id_is_superuser">Superuser status</label>
+
+            
+                <div class="ml-2 -mt-1">
+                    
+    <div class="leading-relaxed mt-2 text-xs">
+        Designates that this user has all permissions without explicitly assigning them.
+    </div>
+
+
+                </div>
+            
+
+            
+        </div>
+    </div>
+
+
+                    
+                
+            </div>
+        
+    
+</div>
+
+        
+    </div>
+
+    
+</fieldset>
+
+                            
+                        
+
+                        
+
+
+    
+
+
+                    
+                
+
+                
+
+                
+                    
+                
+
+                
+
+                
+                    <script id="django-admin-form-add-constants" src="/portfolio/tps/system/static/admin/js/change_form.js" async></script>
+                
+
+                
+<script id="django-admin-prepopulated-fields-constants"
+        src="/portfolio/tps/system/static/admin/js/prepopulate_init.js"
+        data-prepopulated-fields="[]">
+</script>
+
+            </div>
+
+            
+        </form>
+
+        
+
+        
+
+        
+    </div>
+
+
+                    
+                </div>
+            </div>
+
+            
+    
+
+<div id="submit-row" class="relative lg:sticky lg:bottom-0 z-40">
+    <div class="backdrop-blur-xs bg-white/80 rounded-b-default pb-4 px-4 dark:bg-base-900/80 lg:border-t lg:border-base-200 relative lg:scrollable-top lg:py-0 dark:border-base-800">
+        <div class="flex flex-col-reverse gap-3 items-center mx-auto lg:flex-row-reverse container lg:h-[64px]">
+            
+                
+                    <button type="submit" form="customuser_form" name="_save" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-white w-full lg:w-auto">
+                        Save
+                    </button>
+                
+
+                
+
+                
+                    <button type="submit" form="customuser_form" name="_continue" class="border border-base-200 cursor-pointer font-medium px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
+                        
+                            Save and continue editing
+                        
+                    </button>
+                
+
+                
+                    <button type="submit" form="customuser_form" name="_addanother" class="border border-base-200 cursor-pointer font-medium px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
+                        Save and add another
+                    </button>
+                
+
+                
+
+                <div class="flex flex-col gap-3 mr-auto w-full lg:flex-row lg:w-auto">
+                    
+
+                    
+                        
+
+                        <a href="/portfolio/tps/system/admin/users/customuser/31/delete/" class="bg-red-600 cursor-pointer flex items-center justify-center font-medium h-[38px] ml-auto px-3 py-2 rounded-default text-center text-white w-full lg:w-auto dark:bg-red-500/20 dark:text-red-500">
+                            Delete user
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+
+
+        <div id="modal-overlay" class="backdrop-blur-xs bg-base-900/80 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
+
+        
+
+
+    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]"
+         x-data="searchCommand()"
+         x-on:opencommand.window="handleOpen()"
+         x-on:keydown.window="handleShortcut($event)"
+         x-show="openCommandResults">
+        <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
+            <div class="flex flex-row items-center px-4 w-full">
+                <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
+                    <span class="block material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:hidden">
+                        search
+                    </span>
+
+                    <span class="hidden material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:block animate-spin">
+                        progress_activity
+                    </span>
+                </button>
+
+                <input
+                    autocomplete="off"
+                    type="search"
+                    placeholder="Type to search"
+                    class="font-medium grow px-2 py-4 placeholder-font-subtle-light text-font-default-light focus:outline-hidden dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                    name="s"
+                    id="search-input-command"
+                    x-ref="searchInputCommand"
+                    hx-indicator="#command-submit"
+                    x-on:keydown.escape.prevent="handleEscape()"
+                    x-on:keydown.arrow-down.prevent="nextItem()"
+                    x-on:keydown.arrow-up.prevent="prevItem()"
+                    x-on:keydown.enter.prevent="selectItem(false)"
+                    hx-get="/portfolio/tps/system/admin/search/?extended=1"
+                    hx-trigger="keyup changed delay:500ms"
+                    hx-select="#command-results-list"
+                    hx-select-oob="#command-results-note"
+                    hx-target="#command-results">
+
+                <kbd class="bg-base-50 border border-base-200 font-sans text-xs text-font-subtle-light rounded-xs px-1 whitespace-nowrap dark:bg-white/[.04] dark:border-base-700 dark:text-font-subtle-dark">
+    esc
+</kbd>
+
+            </div>
+
+            <div class="grow h-full overflow-auto w-full dark:border-base-700" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)" x-bind:class="{'border-t border-base-200': items !== undefined && items.length > 0}">
+                <div id="command-results"></div>
+
+                
+
+                <div id="command-results-note"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <script src="/portfolio/tps/system/static/unfold/js/simplebar/simplebar.js"></script>
+    </body>
+</html>
