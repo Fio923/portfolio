@@ -28,8 +28,24 @@
 @media(max-width:760px){.about-section{min-height:560px}.signature-heading{gap:8px}.signature-slot{width:36px;height:36px;flex-basis:36px}}
 @media(prefers-reduced-motion:reduce){.signature-slot:before{opacity:1}.signature-name{transition:none}}
 
-/* Right-hand portrait and short, resume-based introduction. */
-.about-section{max-width:none;padding:150px var(--space) 170px;min-height:680px}.profile-block{display:grid;grid-template-columns:190px minmax(0,1fr);gap:44px;align-items:start;width:min(820px,54vw);margin-left:auto}.profile-portrait{width:190px;height:190px;border:1px solid #dfe5ed;border-radius:50%;padding:7px;position:relative;margin-top:22px;background:#fff}.profile-portrait>img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;border-radius:50%}.profile-portrait .signature-slot{position:absolute;left:50%;top:-14px;transform:translate(-50%,-50%);width:36px;height:36px}.profile-copy .about-label{font-size:11px;margin-bottom:16px;color:#7d8590}.profile-copy h2{font-size:32px;font-weight:400;letter-spacing:-.04em;line-height:1.4}.profile-role{font-size:12px;color:#667281;margin-top:10px}.profile-bio{max-width:470px;margin-top:27px;font-size:14px;line-height:2;color:#626c79}.profile-bio p+p{margin-top:13px}.profile-skills{font-size:11px;color:#7d8795;margin:25px 0 30px;line-height:1.8}.profile-copy .email-link{font-size:15px;white-space:nowrap}.profile-copy .email-link span{margin-left:15px}
-@media(min-width:1800px){.about-section{padding-right:8vw}.profile-block{gap:48px;grid-template-columns:190px minmax(0,1fr)}}
+/* Centered portrait and short, resume-based introduction. */
+.about-section{max-width:none;padding:150px var(--space) 170px;min-height:680px}.profile-block{display:grid;grid-template-columns:190px minmax(0,1fr);gap:44px;align-items:start;width:min(820px,100%);margin-inline:auto}.profile-portrait{width:190px;height:190px;border:1px solid #dfe5ed;border-radius:50%;padding:7px;position:relative;margin-top:22px;background:#fff}.profile-portrait>img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;border-radius:50%}.profile-portrait .signature-slot{position:absolute;left:50%;top:-14px;transform:translate(-50%,-50%);width:36px;height:36px}.profile-copy .about-label{font-size:11px;margin-bottom:16px;color:#7d8590}.profile-copy h2{font-size:32px;font-weight:400;letter-spacing:-.04em;line-height:1.4}.profile-role{font-size:12px;color:#667281;margin-top:10px}.profile-bio{max-width:470px;margin-top:27px;font-size:14px;line-height:2;color:#626c79}.profile-bio p+p{margin-top:13px}.profile-skills{font-size:11px;color:#7d8795;margin:25px 0 30px;line-height:1.8}.profile-copy .email-link{font-size:15px;white-space:nowrap}.profile-copy .email-link span{margin-left:15px}
+@media(min-width:1800px){.profile-block{gap:48px;grid-template-columns:190px minmax(0,1fr)}}
 @media(max-width:1100px){.profile-block{width:min(760px,86vw);grid-template-columns:155px minmax(0,1fr);gap:32px}.profile-portrait{width:155px;height:155px}.profile-bio{font-size:13px}.about-section{padding-top:130px;padding-bottom:140px}}
 @media(max-width:760px){.about-section{padding:95px 24px 90px;min-height:650px}.profile-block{width:100%;grid-template-columns:1fr;gap:32px}.profile-portrait{width:134px;height:134px;margin:20px auto 0}.profile-copy h2{font-size:28px}.profile-copy .about-label{font-size:10px;margin-bottom:12px}.profile-bio{font-size:13px;line-height:1.95;margin-top:24px}.profile-skills{margin:22px 0 26px;font-size:10px}.profile-copy .email-link{font-size:14px}}
+
+/* One brief arrival: sparkles touch the portrait, then the journey clears. */
+.portrait-sparkles{position:absolute;inset:-18px;pointer-events:none}
+.portrait-sparkles i{position:absolute;width:22px;height:22px;background:var(--blue);clip-path:path("M11 0Q12 10 22 11Q12 12 11 22Q10 12 0 11Q10 10 11 0Z");opacity:0;transform:scale(.2)}
+.portrait-sparkles i:nth-child(1){left:45%;top:0;--delay:0ms}
+.portrait-sparkles i:nth-child(2){left:12%;top:25%;--delay:100ms}
+.portrait-sparkles i:nth-child(3){right:6%;top:38%;--delay:180ms;background:#eabe43}
+.portrait-sparkles i:nth-child(4){left:24%;bottom:9%;--delay:260ms;background:#eabe43}
+.portrait-sparkles i:nth-child(5){right:19%;bottom:17%;--delay:340ms}
+.star-landed .portrait-sparkles i{animation:portrait-twinkle 760ms ease-in-out var(--delay) both}
+.star-landed .profile-portrait{animation:portrait-glow 1100ms ease-out both}
+.travel-star.journey-complete,.star-trail.journey-complete{animation:journey-out 650ms ease-out 420ms both}
+@keyframes portrait-twinkle{0%{opacity:0;transform:scale(.2) rotate(-20deg)}35%{opacity:1;transform:scale(1.05) rotate(0)}60%{opacity:.35;transform:scale(.65) rotate(12deg)}78%{opacity:.85;transform:scale(.9) rotate(18deg)}100%{opacity:0;transform:scale(.2) rotate(30deg)}}
+@keyframes portrait-glow{0%,100%{box-shadow:0 0 0 0 #002fa700}35%{box-shadow:0 0 0 9px #002fa70d,0 0 30px #ffe46c45}}
+@keyframes journey-out{from{opacity:1}to{opacity:0}}
+@media(prefers-reduced-motion:reduce){.portrait-sparkles{display:none}.star-landed .profile-portrait,.travel-star.journey-complete,.star-trail.journey-complete{animation:none}}

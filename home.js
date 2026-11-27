@@ -2,6 +2,11 @@
 (() => {
   const star = document.querySelector('.travel-star');
   const shape = star.querySelector('path');
+  const portraitSparkles = document.createElement('span');
+  portraitSparkles.className = 'portrait-sparkles';
+  portraitSparkles.setAttribute('aria-hidden', 'true');
+  portraitSparkles.innerHTML = '<i></i><i></i><i></i><i></i><i></i>';
+  document.querySelector('.profile-portrait').append(portraitSparkles);
   const docks = [...document.querySelectorAll('.star-dock')];
   const scenes = [...document.querySelectorAll('.project-scene')];
   const sceneMotion = window.createPortfolioScenes(scenes, star);
@@ -107,6 +112,8 @@
     const crossing=easedScroll>=route[3].at-innerHeight*.12&&easedScroll<=route[5].at+innerHeight*.12;
     const landed=!reduced.matches&&easedScroll>=route.at(-1).at-.5;
     star.classList.toggle('crossing-project',crossing);
+    star.classList.toggle('journey-complete',landed);
+    trail.classList.toggle('journey-complete',landed);
     star.dataset.landed=String(landed);
     star.dataset.routeStage=b.kind||'project';
     document.querySelector('.about-section').classList.toggle('star-landed',landed);
