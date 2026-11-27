@@ -23,3 +23,7 @@
 @media(prefers-reduced-motion:reduce){.binary-scenes{display:none}}
 
 @media(max-width:960px){.travel-star{z-index:0}.scene-visual{z-index:1}}
+
+.about-section{min-height:620px}.signature-heading{display:flex;align-items:center;gap:13px}.signature-slot{display:inline-block;width:42px;height:42px;flex:0 0 42px;position:relative}.signature-slot:before{content:"✦";position:absolute;inset:0;display:grid;place-items:center;font-size:36px;color:var(--blue);opacity:0}.signature-name{transition:color .25s}.star-landed .signature-name{color:var(--blue)}.travel-star.crossing-project{z-index:8}
+@media(max-width:760px){.about-section{min-height:560px}.signature-heading{gap:8px}.signature-slot{width:36px;height:36px;flex-basis:36px}}
+@media(prefers-reduced-motion:reduce){.signature-slot:before{opacity:1}.signature-name{transition:none}}

@@ -113,7 +113,7 @@ window.createPortfolioScenes = function(scenes, star) {
       const ink=pixels[(y*300+x)*4+3]/255;if(ink<.2)continue;
       const seed=x*11+y*17+side*101,rand=noise(seed);
       if(rand<.12)continue;
-      ctx.globalAlpha=alpha*(.48+rand*.42)*ink;ctx.fillStyle=rand>.94?'#829bc2':'#a8b9cf';
+      ctx.globalAlpha=alpha*(.48+rand*.42)*ink;ctx.fillStyle=rand>.94?'#5b7eae':'#8197b4';
       ctx.fillText((Math.floor(rand*17+p*5)%2)?'1':'0',ox+x*scale+(rand-.5)*scatter,oy+y*scale+(noise(seed+1)-.5)*scatter);
     }
     ctx.restore();
@@ -133,7 +133,7 @@ window.createPortfolioScenes = function(scenes, star) {
       ctx.save();
       scene.querySelectorAll('.visual-link,.care-moment').forEach(e=>{const r=e.getBoundingClientRect();ctx.beginPath();ctx.rect(0,0,width,height);ctx.rect(r.left-18,r.top-18,r.width+36,r.height+36);ctx.clip('evenodd')});
       const left=[droplets,parking,content][i],right=[plant,verification,person][i];
-      binary(left,b.left,p,visible*.66,i*2);binary(right,b.right,p,visible*.74,i*2+1);
+      binary(left,b.left,p,visible*.8,i*2);binary(right,b.right,p,visible*.86,i*2+1);
       ctx.restore();
       const morph=smooth(.14,.32,p)*(1-smooth(.68,.86,p));
       if(morph>strength){chosen=i;strength=morph;phase=p}

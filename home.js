@@ -19,13 +19,14 @@
   const safeMask=document.createElementNS(ns,'mask');
   safeMask.id='trail-image-exclusion';safeMask.setAttribute('maskUnits','userSpaceOnUse');
   const white=document.createElementNS(ns,'rect');white.setAttribute('fill','white');safeMask.append(white);
-  const exclusions=[...document.querySelectorAll('.scene-visual .visual-link,.care-moment')].map(element=>{
+  // The playhead intentionally crosses the digital preview; binary artwork stays outside.
+  const exclusions=[...document.querySelectorAll('.scene-visual .visual-link,.care-moment,.scene-caption,.about-label')].filter(element=>!(element.matches('.visual-link')&&element.closest('.digital-scene'))).map(element=>{
     const rect=document.createElementNS(ns,'rect');rect.setAttribute('fill','black');rect.setAttribute('rx','20');safeMask.append(rect);return {element,rect};
   });
   trail.querySelector('defs').append(safeMask);
   [line,halo].forEach(p=>p.setAttribute('mask','url(#trail-image-exclusion)'));
   const ruler = document.createElementNS(ns, 'path');
-  let stops = [], lengths = [], total = 0, frame = 0, lastTime = 0;
+  let stops = [], route = [], lengths = [], total = 0, frame = 0, lastTime = 0;
   let easedScroll = scrollY;
   const lerp = (a,b,t) => a+(b-a)*t;
   const clamp = (n,min=0,max=1) => Math.max(min,Math.min(max,n));
@@ -40,13 +41,32 @@
         size:Number(dock.dataset.size)*(innerWidth<761?.78:1),
         turn:Number(dock.dataset.turn),pinch:Number(dock.dataset.pinch)};
     });
-    let d=`M${stops[0].x},${stops[0].y}`;
+    const card=document.querySelector('.digital-window').getBoundingClientRect();
+    const signature=document.querySelector('.signature-slot').getBoundingClientRect();
+    const pageWidth=document.documentElement.clientWidth,edge=innerWidth<761?48:70;
+    const x=v=>clamp(v,edge,pageWidth-edge);
+    const digital=stops[3],top=card.top+scrollY;
+    const finish={x:signature.left+signature.width/2,y:signature.top+scrollY+signature.height/2,
+      at:Math.min(document.body.offsetHeight-innerHeight,Math.max(digital.at+innerHeight*.64,signature.top+scrollY-innerHeight*.47)),size:36,turn:360,kind:'signature'};
+    const exitAt=Math.min(digital.at+innerHeight*.36,finish.at-innerHeight*.23);
+    const entry={x:x(card.left-65),y:top+card.height*.12,at:digital.at-innerHeight*.42,size:76,turn:260,kind:'digital-entry'};
+    const middle={x:x(card.left+card.width*.5),y:top+card.height*.64,at:Math.min(digital.at+innerHeight*.02,exitAt-innerHeight*.18),size:68,turn:270,kind:'digital-cross'};
+    const exit={x:x(card.right+65),y:top+card.height*.42,at:exitAt,size:70,turn:300,kind:'digital-exit'};
+    middle.curve=[{x:x(entry.x+card.width*.19),y:entry.y+card.height*.12},{x:x(middle.x-card.width*.24),y:middle.y+card.height*.28}];
+    entry.curve=[{x:x(stops[2].x+(entry.x-stops[1].x)/6),y:stops[2].y+(entry.y-stops[1].y)/6},{x:x(entry.x-card.width*.19),y:entry.y-card.height*.12}];
+    exit.curve=[{x:x(middle.x+card.width*.24),y:middle.y-card.height*.28},{x:x(exit.x-card.width*.13),y:exit.y-card.height*.2}];
+    finish.curve=[{x:x(exit.x+card.width*.13),y:exit.y+card.height*.2},{x:Math.min(pageWidth-24,finish.x+80),y:finish.y-180}];
+    // Mirror the clamped handles as well, preserving tangent continuity on phones.
+    middle.curve[0]={x:2*entry.x-entry.curve[1].x,y:2*entry.y-entry.curve[1].y};
+    exit.curve[1]={x:2*exit.x-finish.curve[0].x,y:2*exit.y-finish.curve[0].y};
+    route=[stops[0],stops[1],stops[2],entry,middle,exit,finish];
+    let d=`M${route[0].x},${route[0].y}`;
     lengths=[0];total=0;
     // Catmull–Rom tangents keep the path smooth across each project waypoint.
-    for(let i=0;i<stops.length-1;i++) {
-      const before=stops[Math.max(0,i-1)],a=stops[i],b=stops[i+1],after=stops[Math.min(stops.length-1,i+2)];
-      const c1={x:clamp(a.x+(b.x-before.x)/6,24,innerWidth-24),y:a.y+(b.y-before.y)/6};
-      const c2={x:clamp(b.x-(after.x-a.x)/6,24,innerWidth-24),y:b.y-(after.y-a.y)/6};
+    for(let i=0;i<route.length-1;i++) {
+      const before=route[Math.max(0,i-1)],a=route[i],b=route[i+1],after=route[Math.min(route.length-1,i+2)];
+      const c1=b.curve?.[0]||{x:clamp(a.x+(b.x-before.x)/6,24,pageWidth-24),y:a.y+(b.y-before.y)/6};
+      const c2=b.curve?.[1]||{x:clamp(b.x-(after.x-a.x)/6,24,pageWidth-24),y:b.y-(after.y-a.y)/6};
       const curve=`C${c1.x},${c1.y} ${c2.x},${c2.y} ${b.x},${b.y}`;
       ruler.setAttribute('d',`M${a.x},${a.y}${curve}`);
       total+=ruler.getTotalLength();lengths.push(total);d+=curve;
@@ -63,7 +83,7 @@
 
   function draw(time) {
     frame=0;
-    if(!stops.length)return;
+    if(!route.length)return;
     const dt=lastTime?Math.min(64,time-lastTime):16;
     lastTime=time;
     // A short, time-based catch-up absorbs wheel steps without locking native scroll.
@@ -71,8 +91,8 @@
     easedScroll=lerp(easedScroll,scrollY,1-Math.exp(-dt/105));
     if(Math.abs(easedScroll-scrollY)<.15)easedScroll=scrollY;
     let n=0;
-    while(n<stops.length-2 && easedScroll>stops[n+1].at)n++;
-    const a=stops[n],b=stops[n+1];
+    while(n<route.length-2 && easedScroll>route[n+1].at)n++;
+    const a=route[n],b=route[n+1];
     const t=clamp((easedScroll-a.at)/(b.at-a.at));
     const distance=lerp(lengths[n],lengths[n+1],t);
     const point=line.getPointAtLength(distance);
@@ -88,6 +108,12 @@
       star.style.transform=`translate(${point.x-60}px,${point.y-scrollY-60}px) rotate(${turn}deg) scale(${size/120})`;
     }
     star.style.opacity='1';
+    const crossing=easedScroll>=route[3].at-innerHeight*.12&&easedScroll<=route[5].at+innerHeight*.12;
+    const landed=!reduced.matches&&easedScroll>=route.at(-1).at-.5;
+    star.classList.toggle('crossing-project',crossing);
+    star.dataset.landed=String(landed);
+    star.dataset.routeStage=b.kind||'project';
+    document.querySelector('.about-section').classList.toggle('star-landed',landed);
     exclusions.forEach(({element,rect})=>{const r=element.getBoundingClientRect();rect.setAttribute('x',r.left-16);rect.setAttribute('y',r.top+scrollY-16);rect.setAttribute('width',r.width+32);rect.setAttribute('height',r.height+32)});
     // Only the travelled portion is painted; there is no visible future path.
     [line,halo].forEach(p=>{p.style.strokeDasharray=`${distance} ${total+1}`});
