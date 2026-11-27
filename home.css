@@ -42,10 +42,12 @@
 .portrait-sparkles i:nth-child(3){right:6%;top:38%;--delay:180ms;background:#eabe43}
 .portrait-sparkles i:nth-child(4){left:24%;bottom:9%;--delay:260ms;background:#eabe43}
 .portrait-sparkles i:nth-child(5){right:19%;bottom:17%;--delay:340ms}
-.star-landed .portrait-sparkles i{animation:portrait-twinkle 760ms ease-in-out var(--delay) both}
-.star-landed .profile-portrait{animation:portrait-glow 1100ms ease-out both}
-.travel-star.journey-complete,.star-trail.journey-complete{animation:journey-out 650ms ease-out 420ms both}
-@keyframes portrait-twinkle{0%{opacity:0;transform:scale(.2) rotate(-20deg)}35%{opacity:1;transform:scale(1.05) rotate(0)}60%{opacity:.35;transform:scale(.65) rotate(12deg)}78%{opacity:.85;transform:scale(.9) rotate(18deg)}100%{opacity:0;transform:scale(.2) rotate(30deg)}}
-@keyframes portrait-glow{0%,100%{box-shadow:0 0 0 0 #002fa700}35%{box-shadow:0 0 0 9px #002fa70d,0 0 30px #ffe46c45}}
+.star-landed .portrait-sparkles i{animation:portrait-twinkle 1800ms ease-in-out var(--delay) both}
+.star-landed .profile-portrait{animation:portrait-glow 2200ms ease-out both}
+.travel-star.journey-complete,.star-trail.journey-complete{animation:journey-out 1800ms ease-in-out 2300ms both}
+@keyframes portrait-twinkle{0%{opacity:0;transform:scale(.2) rotate(-20deg)}16%,45%,74%{opacity:1;transform:scale(1.6) rotate(0)}30%,59%{opacity:.2;transform:scale(.65) rotate(12deg)}88%{opacity:.8;transform:scale(1.15) rotate(18deg)}100%{opacity:0;transform:scale(.2) rotate(30deg)}}
+@keyframes portrait-glow{0%,100%{box-shadow:0 0 0 0 #002fa700}20%,50%,80%{box-shadow:0 0 0 10px #002fa717,0 0 40px #ffe46c80}35%,65%{box-shadow:0 0 0 3px #002fa706,0 0 12px #ffe46c25}}
+.travel-star.journey-complete{animation:arrival-star-glow 2100ms ease-in-out both,journey-out 1800ms ease-in-out 2300ms both}
+@keyframes arrival-star-glow{0%,100%{filter:none}18%,48%,78%{filter:drop-shadow(0 0 8px #002fa7aa) drop-shadow(0 0 18px #ffe46cbb)}33%,63%{filter:drop-shadow(0 0 2px #002fa733)}}
 @keyframes journey-out{from{opacity:1}to{opacity:0}}
 @media(prefers-reduced-motion:reduce){.portrait-sparkles{display:none}.star-landed .profile-portrait,.travel-star.journey-complete,.star-trail.journey-complete{animation:none}}
