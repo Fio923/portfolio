@@ -47,18 +47,14 @@
     const x=v=>clamp(v,edge,pageWidth-edge);
     const digital=stops[3],top=card.top+scrollY;
     const finish={x:signature.left+signature.width/2,y:signature.top+scrollY+signature.height/2,
-      at:Math.min(document.body.offsetHeight-innerHeight,Math.max(digital.at+innerHeight*.64,signature.top+scrollY-innerHeight*.47)),size:36,turn:360,kind:'signature'};
+      at:Math.min(document.body.offsetHeight-innerHeight,Math.max(digital.at+innerHeight*.64,signature.top+scrollY-innerHeight*.47)),size:32,turn:360,kind:'signature'};
     const exitAt=Math.min(digital.at+innerHeight*.36,finish.at-innerHeight*.23);
-    const entry={x:x(card.left-65),y:top+card.height*.12,at:digital.at-innerHeight*.42,size:76,turn:260,kind:'digital-entry'};
-    const middle={x:x(card.left+card.width*.5),y:top+card.height*.64,at:Math.min(digital.at+innerHeight*.02,exitAt-innerHeight*.18),size:68,turn:270,kind:'digital-cross'};
-    const exit={x:x(card.right+65),y:top+card.height*.42,at:exitAt,size:70,turn:300,kind:'digital-exit'};
-    middle.curve=[{x:x(entry.x+card.width*.19),y:entry.y+card.height*.12},{x:x(middle.x-card.width*.24),y:middle.y+card.height*.28}];
-    entry.curve=[{x:x(stops[2].x+(entry.x-stops[1].x)/6),y:stops[2].y+(entry.y-stops[1].y)/6},{x:x(entry.x-card.width*.19),y:entry.y-card.height*.12}];
-    exit.curve=[{x:x(middle.x+card.width*.24),y:middle.y-card.height*.28},{x:x(exit.x-card.width*.13),y:exit.y-card.height*.2}];
-    finish.curve=[{x:x(exit.x+card.width*.13),y:exit.y+card.height*.2},{x:Math.min(pageWidth-24,finish.x+80),y:finish.y-180}];
-    // Mirror the clamped handles as well, preserving tangent continuity on phones.
-    middle.curve[0]={x:2*entry.x-entry.curve[1].x,y:2*entry.y-entry.curve[1].y};
-    exit.curve[1]={x:2*exit.x-finish.curve[0].x,y:2*exit.y-finish.curve[0].y};
+    const entry={x:x(card.left-65),y:top+card.height*.18,at:digital.at-innerHeight*.42,size:76,turn:260,kind:'digital-entry'};
+    const middle={x:x(card.left+card.width*.5),y:top+card.height*.48,at:Math.min(digital.at+innerHeight*.02,exitAt-innerHeight*.18),size:68,turn:270,kind:'digital-cross'};
+    const exit={x:x(card.right+65),y:top+card.height*.8,at:exitAt,size:70,turn:300,kind:'digital-exit'};
+    // Continue the same broad, downward curve into the right-hand portrait.
+    // Matching the incoming tangent avoids the previous S bend and hard return.
+    finish.curve=[{x:x(exit.x+(finish.x-middle.x)/6),y:exit.y+(finish.y-middle.y)/6},{x:finish.x,y:finish.y-Math.min(180,Math.max(70,(finish.y-exit.y)*.22))}];
     route=[stops[0],stops[1],stops[2],entry,middle,exit,finish];
     let d=`M${route[0].x},${route[0].y}`;
     lengths=[0];total=0;
