@@ -4,6 +4,7 @@
   const shape = star.querySelector('path');
   const docks = [...document.querySelectorAll('.star-dock')];
   const scenes = [...document.querySelectorAll('.project-scene')];
+  const sceneMotion = window.createPortfolioScenes(scenes, star);
   const index = [...document.querySelectorAll('.project-index a')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const ns = 'http://www.w3.org/2000/svg';
@@ -15,6 +16,14 @@
   const line = trail.querySelector('.trail-line');
   const halo = trail.querySelector('.trail-halo');
   const gradient = trail.querySelector('linearGradient');
+  const safeMask=document.createElementNS(ns,'mask');
+  safeMask.id='trail-image-exclusion';safeMask.setAttribute('maskUnits','userSpaceOnUse');
+  const white=document.createElementNS(ns,'rect');white.setAttribute('fill','white');safeMask.append(white);
+  const exclusions=[...document.querySelectorAll('.scene-visual .visual-link,.care-moment')].map(element=>{
+    const rect=document.createElementNS(ns,'rect');rect.setAttribute('fill','black');rect.setAttribute('rx','20');safeMask.append(rect);return {element,rect};
+  });
+  trail.querySelector('defs').append(safeMask);
+  [line,halo].forEach(p=>p.setAttribute('mask','url(#trail-image-exclusion)'));
   const ruler = document.createElementNS(ns, 'path');
   let stops = [], lengths = [], total = 0, frame = 0, lastTime = 0;
   let easedScroll = scrollY;
@@ -22,10 +31,11 @@
   const clamp = (n,min=0,max=1) => Math.max(min,Math.min(max,n));
 
   function measure() {
+    const anchors = sceneMotion.measure();
     stops = docks.map((dock,i) => {
       const r = dock.getBoundingClientRect();
       const scene = i ? scenes[i-1].getBoundingClientRect() : null;
-      return {x:r.left,y:r.top+scrollY,
+      return {x:i?anchors[i-1].x:r.left,y:i?anchors[i-1].y:r.top+scrollY,
         at:i?scene.top+scrollY+scene.height/2-innerHeight/2:0,
         size:Number(dock.dataset.size)*(innerWidth<761?.78:1),
         turn:Number(dock.dataset.turn),pinch:Number(dock.dataset.pinch)};
@@ -44,6 +54,8 @@
     trail.setAttribute('viewBox',`0 0 ${document.documentElement.clientWidth} ${document.body.offsetHeight}`);
     trail.setAttribute('width','100%');
     trail.setAttribute('height',document.body.offsetHeight);
+    safeMask.setAttribute('x','0');safeMask.setAttribute('y','0');safeMask.setAttribute('width',document.documentElement.clientWidth);safeMask.setAttribute('height',document.body.offsetHeight);
+    white.setAttribute('width',document.documentElement.clientWidth);white.setAttribute('height',document.body.offsetHeight);
     [line,halo].forEach(p=>{p.setAttribute('d',d);p.style.strokeDasharray=`0 ${total+1}`});
     easedScroll=scrollY;
     requestDraw();
@@ -66,16 +78,17 @@
     const point=line.getPointAtLength(distance);
     const arrival=Math.exp(-Math.pow((t-.98)/.22,2));
     const size=lerp(a.size,b.size,t)*(1+.22*Math.sin(t*Math.PI)+.12*arrival);
-    const pinch=lerp(a.pinch,b.pinch,t);
+    const pose=sceneMotion.update(easedScroll,point,stops,reduced.matches);
     if(reduced.matches) {
       const s=stops[0];
       star.style.transform=`translate(${s.x-60}px,${s.y-60}px) scale(${s.size/120})`;
       shape.setAttribute('d','M60 0Q66 54 120 60Q66 66 60 120Q54 66 0 60Q54 54 60 0Z');
     } else {
-      shape.setAttribute('d',`M60 0Q${60+pinch} ${60-pinch} 120 60Q${60+pinch} ${60+pinch} 60 120Q${60-pinch} ${60+pinch} 0 60Q${60-pinch} ${60-pinch} 60 0Z`);
-      star.style.transform=`translate(${point.x-60}px,${point.y-scrollY-60}px) rotate(${lerp(a.turn,b.turn,t)}deg) scale(${size/120})`;
+      const turn=lerp(lerp(a.turn,b.turn,t),pose.turn,pose.morph);
+      star.style.transform=`translate(${point.x-60}px,${point.y-scrollY-60}px) rotate(${turn}deg) scale(${size/120})`;
     }
     star.style.opacity='1';
+    exclusions.forEach(({element,rect})=>{const r=element.getBoundingClientRect();rect.setAttribute('x',r.left-16);rect.setAttribute('y',r.top+scrollY-16);rect.setAttribute('width',r.width+32);rect.setAttribute('height',r.height+32)});
     // Only the travelled portion is painted; there is no visible future path.
     [line,halo].forEach(p=>{p.style.strokeDasharray=`${distance} ${total+1}`});
     gradient.setAttribute('y1',Math.max(stops[0].y,point.y-innerHeight*1.5));
