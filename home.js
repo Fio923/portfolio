@@ -20,7 +20,7 @@
   safeMask.id='trail-image-exclusion';safeMask.setAttribute('maskUnits','userSpaceOnUse');
   const white=document.createElementNS(ns,'rect');white.setAttribute('fill','white');safeMask.append(white);
   // The playhead intentionally crosses the digital preview; binary artwork stays outside.
-  const exclusions=[...document.querySelectorAll('.scene-visual .visual-link,.care-moment,.scene-caption,.about-label')].filter(element=>!(element.matches('.visual-link')&&element.closest('.digital-scene'))).map(element=>{
+  const exclusions=[...document.querySelectorAll('.scene-visual .visual-link,.care-moment')].filter(element=>!(element.matches('.visual-link')&&element.closest('.digital-scene'))).map(element=>{
     const rect=document.createElementNS(ns,'rect');rect.setAttribute('fill','black');rect.setAttribute('rx','20');safeMask.append(rect);return {element,rect};
   });
   trail.querySelector('defs').append(safeMask);
